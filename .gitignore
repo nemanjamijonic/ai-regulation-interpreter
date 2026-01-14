@@ -1,0 +1,78 @@
+# =========================
+# Visual Studio
+# =========================
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# =========================
+# Build results
+# =========================
+[Bb]in/
+[Oo]bj/
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Aa]rm/
+[Aa]rm64/
+
+# =========================
+# Service Fabric
+# =========================
+# Local cluster & publish artifacts
+ApplicationPackageRoot/
+PublishProfiles/
+pkg/
+*.sfproj.user
+
+# Service Fabric local data
+ServiceFabricLocalCluster/
+
+# =========================
+# ASP.NET Core
+# =========================
+appsettings.Development.json
+appsettings.Local.json
+
+# User secrets (if used)
+secrets.json
+
+# =========================
+# Logs
+# =========================
+*.log
+
+# =========================
+# OS generated files
+# =========================
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# =========================
+# NuGet
+# =========================
+*.nupkg
+*.snupkg
+.nuget/packages/
+
+# =========================
+# Node / Frontend (if added later)
+# =========================
+node_modules/
+dist/
+build/
+
+# =========================
+# Test results
+# =========================
+TestResults/
+
+# =========================
+# Coverage
+# =========================
+coverage/
