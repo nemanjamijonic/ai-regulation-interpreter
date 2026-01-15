@@ -36,6 +36,10 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\AIRegulationInterpreter.DocumentService\AIRegulationInterpreter.DocumentService.csproj" />
+    <ProjectReference Include="..\AIRegulationInterpreter.IndexService\AIRegulationInterpreter.IndexService.csproj" />
+    <ProjectReference Include="..\AIRegulationInterpreter.LLMGateway\AIRegulationInterpreter.LLMGateway.csproj" />
+    <ProjectReference Include="..\AIRegulationInterpreter.QueryService\AIRegulationInterpreter.QueryService.csproj" />
     <ProjectReference Include="..\AIRegulationInterpreter.Web\AIRegulationInterpreter.Web.csproj">
       <ServiceLaunchUrl>https://localhost:{ServicePort}/</ServiceLaunchUrl>
     </ProjectReference>

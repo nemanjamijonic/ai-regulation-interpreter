@@ -1,6 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <StartupServices xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.microsoft.com/2011/01/fabric">
   <Parameters>
+    <Parameter Name="AIRegulationInterpreter.LLMGateway_InstanceCount" Value="-1" />
+    <Parameter Name="AIRegulationInterpreter.QueryService_InstanceCount" Value="-1" />
+    <Parameter Name="AIRegulationInterpreter.IndexService_PartitionCount" Value="1" />
+    <Parameter Name="AIRegulationInterpreter.IndexService_MinReplicaSetSize" Value="3" />
+    <Parameter Name="AIRegulationInterpreter.IndexService_TargetReplicaSetSize" Value="3" />
+    <Parameter Name="AIRegulationInterpreter.DocumentService_PartitionCount" Value="1" />
+    <Parameter Name="AIRegulationInterpreter.DocumentService_MinReplicaSetSize" Value="3" />
+    <Parameter Name="AIRegulationInterpreter.DocumentService_TargetReplicaSetSize" Value="3" />
     <Parameter Name="AIRegulationInterpreter.Web_InstanceCount" Value="-1" />
   </Parameters>
 </StartupServices>
