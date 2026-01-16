@@ -1,0 +1,153 @@
+@model AIRegulationInterpreter.Web.Models.QueryResultViewModel
+@{
+    ViewData["Title"] = "Rezultat upita";
+    
+    string GetConfidenceClass(double confidence)
+    {
+        if (confidence >= 0.8) return "success";
+        if (confidence >= 0.6) return "warning";
+        return "danger";
+    }
+    
+    string GetConfidenceText(double confidence)
+    {
+        if (confidence >= 0.8) return "Visoka";
+        if (confidence >= 0.6) return "Srednja";
+        return "Niska";
+    }
+}
+
+<div class="row justify-content-center">
+    <div class="col-lg-10">
+        <!-- Header -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>
+                <i class="bi bi-chat-left-quote"></i> Rezultat upita
+            </h2>
+            <small class="text-muted">
+                <i class="bi bi-clock"></i> @Model.Timestamp.ToString("dd.MM.yyyy HH:mm")
+            </small>
+        </div>
+
+        <!-- Question -->
+        <div class="card mb-4 border-primary">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">
+                    <i class="bi bi-question-circle"></i> Vaše pitanje:
+                </h5>
+            </div>
+            <div class="card-body">
+                <p class="lead mb-0">@Model.Question</p>
+            </div>
+        </div>
+
+        <!-- Confidence Level -->
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="mb-1">Nivo pouzdanosti odgovora:</h6>
+                        <span class="badge bg-@GetConfidenceClass(Model.ConfidenceLevel) fs-6">
+                            @GetConfidenceText(Model.ConfidenceLevel) - @((Model.ConfidenceLevel * 100).ToString("F0"))%
+                        </span>
+                    </div>
+                    <div style="width: 50%;">
+                        <div class="progress" style="height: 25px;">
+                            <div class="progress-bar bg-@GetConfidenceClass(Model.ConfidenceLevel)" 
+                                 role="progressbar" 
+                                 style="width: @((Model.ConfidenceLevel * 100).ToString("F0"))%"
+                                 aria-valuenow="@((Model.ConfidenceLevel * 100).ToString("F0"))" 
+                                 aria-valuemin="0" 
+                                 aria-valuemax="100">
+                                @((Model.ConfidenceLevel * 100).ToString("F0"))%
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Answer -->
+        <div class="card mb-4 shadow-sm">
+            <div class="card-header bg-success text-white">
+                <h5 class="mb-0">
+                    <i class="bi bi-check-circle"></i> Odgovor:
+                </h5>
+            </div>
+            <div class="card-body">
+                <p class="fs-5 mb-0">@Model.Answer</p>
+            </div>
+        </div>
+
+        <!-- Explanation -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i class="bi bi-info-circle"></i> Detaljno obrazloženje:
+                </h5>
+            </div>
+            <div class="card-body">
+                <p class="mb-0">@Model.Explanation</p>
+            </div>
+        </div>
+
+        <!-- References -->
+        @if (Model.References.Any())
+        {
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i class="bi bi-bookmark"></i> Reference i citati (@Model.References.Count):
+                    </h5>
+                </div>
+                <div class="card-body">
+                    @foreach (var reference in Model.References)
+                    {
+                        <div class="card mb-3 border-start border-primary border-4">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <div>
+                                        <h6 class="mb-1">
+                                            <i class="bi bi-file-earmark-text text-primary"></i>
+                                            @reference.DocumentTitle
+                                        </h6>
+                                        <small class="text-muted">
+                                            <span class="badge bg-secondary">@reference.DocumentType</span>
+                                            <span class="badge bg-info">@reference.Section</span>
+                                        </small>
+                                    </div>
+                                </div>
+                                <blockquote class="blockquote mb-0">
+                                    <p class="mb-0 small">
+                                        <em>"@reference.Citation"</em>
+                                    </p>
+                                    <footer class="blockquote-footer mt-2">
+                                        @reference.ArticleNumber, @reference.DocumentTitle
+                                    </footer>
+                                </blockquote>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+
+        <!-- Disclaimer -->
+        <div class="alert alert-warning">
+            <i class="bi bi-exclamation-triangle"></i>
+            <strong>Napomena:</strong> 
+            Ovaj sistem pruža podršku u razumijevanju propisa, ali ne donosi pravne odluke. 
+            Za kona?ne pravne savete konsultujte stru?njaka.
+        </div>
+
+        <!-- Actions -->
+        <div class="d-flex justify-content-between">
+            <a asp-action="Ask" class="btn btn-primary">
+                <i class="bi bi-plus-circle"></i> Novo pitanje
+            </a>
+            <a asp-action="History" class="btn btn-outline-secondary">
+                <i class="bi bi-clock-history"></i> Istorija upita
+            </a>
+        </div>
+    </div>
+</div>

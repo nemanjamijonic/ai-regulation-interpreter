@@ -1,0 +1,109 @@
+@model AIRegulationInterpreter.Web.Models.QueryViewModel
+@{
+    ViewData["Title"] = "Postavi pitanje";
+}
+
+<div class="row justify-content-center">
+    <div class="col-lg-10">
+        <h2 class="mb-4">
+            <i class="bi bi-question-circle"></i> Postavi pitanje o propisima
+        </h2>
+
+        <div class="card shadow-sm mb-4">
+            <div class="card-body p-4">
+                <form asp-action="Ask" method="post">
+                    <div class="mb-4">
+                        <label for="Question" class="form-label fw-bold">Vaše pitanje</label>
+                        <textarea asp-for="Question" 
+                                  class="form-control form-control-lg" 
+                                  rows="4" 
+                                  placeholder="Npr: Koje su obaveze organizacije u vezi sa zaštitom li?nih podataka?"
+                                  required></textarea>
+                        <span asp-validation-for="Question" class="text-danger"></span>
+                        <div class="form-text">
+                            Postavite pitanje u prirodnom jeziku. Sistem ?e analizirati relevantne propise i pružiti detaljno objašnjenje.
+                        </div>
+                    </div>
+
+                    <!-- Advanced Options -->
+                    <div class="card bg-light mb-4">
+                        <div class="card-header">
+                            <h6 class="mb-0">
+                                <button class="btn btn-link text-decoration-none p-0" type="button" data-bs-toggle="collapse" data-bs-target="#advancedOptions">
+                                    <i class="bi bi-sliders"></i> Dodatni kontekst (opciono)
+                                </button>
+                            </h6>
+                        </div>
+                        <div class="collapse" id="advancedOptions">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="ContextDate" class="form-label">Datum konteksta</label>
+                                        <input asp-for="ContextDate" 
+                                               type="date" 
+                                               class="form-control"
+                                               title="Odaberite datum za koji želite da proverite propise" />
+                                        <div class="form-text">Dokumenti važe?i na ovaj datum</div>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="OrganizationType" class="form-label">Tip organizacije</label>
+                                        <select asp-for="OrganizationType" class="form-select">
+                                            <option value="">Izaberite...</option>
+                                            <option value="pravno-lice">Pravno lice</option>
+                                            <option value="fizicko-lice">Fizi?ko lice</option>
+                                            <option value="drzavna-institucija">Državna institucija</option>
+                                            <option value="nvo">Nevladina organizacija</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="mb-0">
+                                    <label class="form-label">Tip dokumenta</label>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="zakon" id="docTypeZakon">
+                                        <label class="form-check-label" for="docTypeZakon">Zakoni</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="pravilnik" id="docTypePravilnik">
+                                        <label class="form-check-label" for="docTypePravilnik">Pravilnici</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="interna-politika" id="docTypePolitika">
+                                        <label class="form-check-label" for="docTypePolitika">Interne politike</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-between">
+                        <a asp-controller="Home" asp-action="Index" class="btn btn-outline-secondary">
+                            <i class="bi bi-arrow-left"></i> Nazad
+                        </a>
+                        <button type="submit" class="btn btn-primary btn-lg px-5">
+                            <i class="bi bi-send"></i> Pošalji pitanje
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Example Questions -->
+        <div class="card border-0 bg-light">
+            <div class="card-body">
+                <h6 class="card-title">
+                    <i class="bi bi-lightbulb"></i> Primeri pitanja:
+                </h6>
+                <ul class="mb-0">
+                    <li>Koje su obaveze organizacije u vezi sa zaštitom li?nih podataka?</li>
+                    <li>Koji su uslovi za objavljivanje finansijskih izveštaja?</li>
+                    <li>Da li je dozvoljeno snimanje razgovora sa klijentima?</li>
+                    <li>Koliko dugo treba ?uvati ra?unovodstvenu dokumentaciju?</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

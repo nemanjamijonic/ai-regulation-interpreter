@@ -1,10 +1,7 @@
-using System;
-using System.Collections.Generic;
 using System.Fabric;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
+using Common.Services.Interfaces;
 using Microsoft.ServiceFabric.Services.Communication.Runtime;
+using Microsoft.ServiceFabric.Services.Remoting.Runtime;
 using Microsoft.ServiceFabric.Services.Runtime;
 
 namespace AIRegulationInterpreter.LLMGateway
@@ -12,7 +9,7 @@ namespace AIRegulationInterpreter.LLMGateway
     /// <summary>
     /// An instance of this class is created for each service instance by the Service Fabric runtime.
     /// </summary>
-    internal sealed class LLMGateway : StatelessService
+    internal sealed class LLMGateway : StatelessService, ILLMGatewayService
     {
         public LLMGateway(StatelessServiceContext context)
             : base(context)
@@ -24,7 +21,7 @@ namespace AIRegulationInterpreter.LLMGateway
         /// <returns>A collection of listeners.</returns>
         protected override IEnumerable<ServiceInstanceListener> CreateServiceInstanceListeners()
         {
-            return new ServiceInstanceListener[0];
+            return this.CreateServiceRemotingInstanceListeners();
         }
 
         /// <summary>

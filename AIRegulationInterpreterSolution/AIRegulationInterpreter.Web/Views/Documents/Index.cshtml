@@ -1,0 +1,150 @@
+@model AIRegulationInterpreter.Web.Models.DocumentListViewModel
+@{
+    ViewData["Title"] = "Dokumenti";
+}
+
+<div class="row">
+    <div class="col-12">
+        <h2 class="mb-4">
+            <i class="bi bi-folder"></i> Pravni dokumenti
+        </h2>
+
+        <!-- Search and Filter -->
+        <div class="card mb-4 shadow-sm">
+            <div class="card-body">
+                <form method="get" asp-action="Index">
+                    <div class="row g-3">
+                        <div class="col-md-5">
+                            <label class="form-label">Pretraga</label>
+                            <input type="text" 
+                                   name="searchTerm" 
+                                   value="@Model.SearchTerm"
+                                   class="form-control" 
+                                   placeholder="Pretražite po nazivu dokumenta...">
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Tip dokumenta</label>
+                            <select name="filterType" class="form-select">
+                                <option value="">Svi tipovi</option>
+                                <option value="Zakon" selected="@(Model.FilterType == "Zakon")">Zakon</option>
+                                <option value="Pravilnik" selected="@(Model.FilterType == "Pravilnik")">Pravilnik</option>
+                                <option value="Interna Politika" selected="@(Model.FilterType == "Interna Politika")">Interna Politika</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="form-label">Status</label>
+                            <select name="filterActive" class="form-select">
+                                <option value="">Svi</option>
+                                <option value="true" selected="@(Model.FilterActive == true)">Aktivni</option>
+                                <option value="false" selected="@(Model.FilterActive == false)">Neaktivni</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="form-label">&nbsp;</label>
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="bi bi-search"></i> Pretraži
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Results Info -->
+        <div class="mb-3">
+            <strong>@Model.Documents.Count</strong> dokument(a) prona?eno
+            @if (!string.IsNullOrWhiteSpace(Model.SearchTerm) || !string.IsNullOrWhiteSpace(Model.FilterType) || Model.FilterActive.HasValue)
+            {
+                <a asp-action="Index" class="btn btn-sm btn-outline-secondary ms-2">
+                    <i class="bi bi-x"></i> Ukloni filtere
+                </a>
+            }
+        </div>
+
+        <!-- Documents Table -->
+        @if (Model.Documents.Any())
+        {
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Naziv dokumenta</th>
+                            <th>Tip</th>
+                            <th>Verzija</th>
+                            <th>Važe?i od</th>
+                            <th>Važe?i do</th>
+                            <th>Status</th>
+                            <th class="text-end">Akcije</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var doc in Model.Documents)
+                        {
+                            <tr>
+                                <td>
+                                    <strong>@doc.Title</strong>
+                                </td>
+                                <td>
+                                    <span class="badge bg-secondary">@doc.Type</span>
+                                </td>
+                                <td>
+                                    <code>v@doc.Version</code>
+                                </td>
+                                <td>
+                                    <small>@doc.ValidFrom.ToString("dd.MM.yyyy")</small>
+                                </td>
+                                <td>
+                                    <small>
+                                        @if (doc.ValidUntil.HasValue)
+                                        {
+                                            @doc.ValidUntil.Value.ToString("dd.MM.yyyy")
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">-</span>
+                                        }
+                                    </small>
+                                </td>
+                                <td>
+                                    @if (doc.IsActive)
+                                    {
+                                        <span class="badge bg-success">
+                                            <i class="bi bi-check-circle"></i> Aktivan
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-danger">
+                                            <i class="bi bi-x-circle"></i> Neaktivan
+                                        </span>
+                                    }
+                                </td>
+                                <td class="text-end">
+                                    <a asp-action="Details" asp-route-id="@doc.Id" class="btn btn-sm btn-outline-primary">
+                                        <i class="bi bi-eye"></i> Detalji
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-info">
+                <i class="bi bi-info-circle"></i>
+                Nisu prona?eni dokumenti koji odgovaraju vašim kriterijumima.
+            </div>
+        }
+
+        <!-- Actions -->
+        <div class="mt-4">
+            <a asp-controller="Home" asp-action="Index" class="btn btn-outline-secondary">
+                <i class="bi bi-house"></i> Po?etna
+            </a>
+        </div>
+    </div>
+</div>

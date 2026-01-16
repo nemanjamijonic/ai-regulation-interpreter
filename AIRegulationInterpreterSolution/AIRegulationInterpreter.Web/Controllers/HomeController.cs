@@ -18,6 +18,18 @@ namespace AIRegulationInterpreter.Web.Controllers
             return View();
         }
 
+        // Quick search redirect from homepage
+        [HttpGet]
+        public IActionResult QuickSearch(string question)
+        {
+            if (string.IsNullOrWhiteSpace(question))
+            {
+                return RedirectToAction("Ask", "Query");
+            }
+
+            return RedirectToAction("Ask", "Query", new { question });
+        }
+
         public IActionResult Privacy()
         {
             return View();

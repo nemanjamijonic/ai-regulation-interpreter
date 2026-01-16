@@ -16,4 +16,8 @@
     <PackageReference Include="Microsoft.ServiceFabric.Services.Remoting" Version="8.3.365" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj" />
+  </ItemGroup>
+
 </Project>

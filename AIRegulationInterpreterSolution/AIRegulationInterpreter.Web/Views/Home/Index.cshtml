@@ -1,8 +1,134 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Početna";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<!-- Quick Search -->
+<div class="row justify-content-center mb-5">
+    <div class="col-lg-8">
+        <div class="card shadow-sm">
+            <div class="card-body p-4">
+                <h5 class="card-title mb-3">
+                    <i class="bi bi-search"></i> Brza pretraga
+                </h5>
+                <form asp-controller="Query" asp-action="Ask" method="get">
+                    <div class="input-group input-group-lg">
+                        <input type="text" 
+                               class="form-control" 
+                               name="question" 
+                               placeholder="Postavite pitanje o propisima..." 
+                               aria-label="Pitanje">
+                        <button class="btn btn-primary px-4" type="submit">
+                            <i class="bi bi-arrow-right"></i> Postavi pitanje
+                        </button>
+                    </div>
+                    <small class="form-text text-muted mt-2 d-block">
+                        Primer: "Koje su obaveze organizacije u vezi sa zaštitom ličnih podataka?"
+                    </small>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Features -->
+<div class="row g-4 mb-5">
+    <div class="col-md-3">
+        <div class="card h-100 text-center border-0 shadow-sm">
+            <div class="card-body">
+                <div class="fs-1 text-primary mb-3">
+                    <i class="bi bi-chat-left-text"></i>
+                </div>
+                <h5 class="card-title">Prirodan jezik</h5>
+                <p class="card-text text-muted">
+                    Postavljajte pitanja kao da razgovarate sa pravnim savetnikom
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card h-100 text-center border-0 shadow-sm">
+            <div class="card-body">
+                <div class="fs-1 text-success mb-3">
+                    <i class="bi bi-file-earmark-text"></i>
+                </div>
+                <h5 class="card-title">Precizne reference</h5>
+                <p class="card-text text-muted">
+                    Svi odgovori su potkrepljeni tačnim citatima iz propisa
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card h-100 text-center border-0 shadow-sm">
+            <div class="card-body">
+                <div class="fs-1 text-warning mb-3">
+                    <i class="bi bi-speedometer2"></i>
+                </div>
+                <h5 class="card-title">Nivo pouzdanosti</h5>
+                <p class="card-text text-muted">
+                    Svaki odgovor sadrži procenu pouzdanosti tumačenja
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card h-100 text-center border-0 shadow-sm">
+            <div class="card-body">
+                <div class="fs-1 text-info mb-3">
+                    <i class="bi bi-clock-history"></i>
+                </div>
+                <h5 class="card-title">Verzionisanje</h5>
+                <p class="card-text text-muted">
+                    Pratimo sve verzije dokumenata i periode važenja
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Quick Stats -->
+<div class="row g-4 mb-5">
+    <div class="col-md-4">
+        <div class="card bg-primary text-white">
+            <div class="card-body text-center">
+                <h3 class="display-4 fw-bold">24</h3>
+                <p class="mb-0">Aktivnih dokumenata</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card bg-success text-white">
+            <div class="card-body text-center">
+                <h3 class="display-4 fw-bold">156</h3>
+                <p class="mb-0">Postavljenih pitanja</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card bg-info text-white">
+            <div class="card-body text-center">
+                <h3 class="display-4 fw-bold">89%</h3>
+                <p class="mb-0">Prosečna pouzdanost</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Call to Action -->
+<div class="row justify-content-center">
+    <div class="col-lg-8 text-center">
+        <div class="card bg-light border-0">
+            <div class="card-body p-5">
+                <h3 class="mb-4">Spremni da počnete?</h3>
+                <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+                    <a asp-controller="Query" asp-action="Ask" class="btn btn-primary btn-lg px-4">
+                        <i class="bi bi-question-circle"></i> Postavite pitanje
+                    </a>
+                    <a asp-controller="Documents" asp-action="Index" class="btn btn-outline-secondary btn-lg px-4">
+                        <i class="bi bi-folder"></i> Pregledajte dokumente
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

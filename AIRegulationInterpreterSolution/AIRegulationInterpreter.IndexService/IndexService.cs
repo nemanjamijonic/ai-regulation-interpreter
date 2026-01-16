@@ -1,11 +1,8 @@
-using System;
-using System.Collections.Generic;
 using System.Fabric;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
+using Common.Services.Interfaces;
 using Microsoft.ServiceFabric.Data.Collections;
 using Microsoft.ServiceFabric.Services.Communication.Runtime;
+using Microsoft.ServiceFabric.Services.Remoting.Runtime;
 using Microsoft.ServiceFabric.Services.Runtime;
 
 namespace AIRegulationInterpreter.IndexService
@@ -13,7 +10,7 @@ namespace AIRegulationInterpreter.IndexService
     /// <summary>
     /// An instance of this class is created for each service replica by the Service Fabric runtime.
     /// </summary>
-    internal sealed class IndexService : StatefulService
+    internal sealed class IndexService : StatefulService, IIndexKnowledgeService
     {
         public IndexService(StatefulServiceContext context)
             : base(context)
@@ -28,7 +25,7 @@ namespace AIRegulationInterpreter.IndexService
         /// <returns>A collection of listeners.</returns>
         protected override IEnumerable<ServiceReplicaListener> CreateServiceReplicaListeners()
         {
-            return new ServiceReplicaListener[0];
+            return this.CreateServiceRemotingReplicaListeners();
         }
 
         /// <summary>

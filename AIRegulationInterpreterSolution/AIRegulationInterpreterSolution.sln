@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AIRegulationInterpreter.Que
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AIRegulationInterpreter.LLMGateway", "AIRegulationInterpreter.LLMGateway\AIRegulationInterpreter.LLMGateway.csproj", "{EBBDC9B6-6647-4590-B67A-5BE035DF6C81}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{F1369438-24CF-4509-994B-F4F88DFA6DAB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -75,6 +77,14 @@ Global
 		{EBBDC9B6-6647-4590-B67A-5BE035DF6C81}.Release|Any CPU.Build.0 = Release|Any CPU
 		{EBBDC9B6-6647-4590-B67A-5BE035DF6C81}.Release|x64.ActiveCfg = Release|Any CPU
 		{EBBDC9B6-6647-4590-B67A-5BE035DF6C81}.Release|x64.Build.0 = Release|Any CPU
+		{F1369438-24CF-4509-994B-F4F88DFA6DAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1369438-24CF-4509-994B-F4F88DFA6DAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1369438-24CF-4509-994B-F4F88DFA6DAB}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{F1369438-24CF-4509-994B-F4F88DFA6DAB}.Debug|x64.Build.0 = Debug|Any CPU
+		{F1369438-24CF-4509-994B-F4F88DFA6DAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1369438-24CF-4509-994B-F4F88DFA6DAB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F1369438-24CF-4509-994B-F4F88DFA6DAB}.Release|x64.ActiveCfg = Release|Any CPU
+		{F1369438-24CF-4509-994B-F4F88DFA6DAB}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
