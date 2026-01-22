@@ -1,4 +1,5 @@
 using AIRegulationInterpreter.Web.Models;
+using Common.Models.Constants;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AIRegulationInterpreter.Web.Controllers
@@ -13,7 +14,7 @@ namespace AIRegulationInterpreter.Web.Controllers
         }
 
         // GET: /Documents
-        public IActionResult Index(string? searchTerm, string? filterType, bool? filterActive)
+        public IActionResult Index(string? searchTerm, DocumentType? filterType, bool? filterActive)
         {
             // Mock documents data
             var allDocuments = GetMockDocuments();
@@ -27,9 +28,9 @@ namespace AIRegulationInterpreter.Web.Controllers
                     d.Title.Contains(searchTerm, StringComparison.OrdinalIgnoreCase));
             }
 
-            if (!string.IsNullOrWhiteSpace(filterType))
+            if (filterType.HasValue)
             {
-                filteredDocuments = filteredDocuments.Where(d => d.Type == filterType);
+                filteredDocuments = filteredDocuments.Where(d => d.Type == filterType.Value);
             }
 
             if (filterActive.HasValue)
@@ -56,10 +57,8 @@ namespace AIRegulationInterpreter.Web.Controllers
             {
                 Id = id,
                 Title = "Zakon o zaštiti podataka o li?nosti",
-                Type = "Zakon",
+                Type = DocumentType.Zakon,
                 Version = "2.1",
-                ValidFrom = new DateTime(2023, 1, 1),
-                ValidUntil = null,
                 IsActive = true,
                 Sections = new List<DocumentSectionViewModel>
                 {
@@ -140,7 +139,7 @@ namespace AIRegulationInterpreter.Web.Controllers
                 {
                     Id = 1,
                     Title = "Zakon o zaštiti podataka o li?nosti",
-                    Type = "Zakon",
+                    Type = DocumentType.Zakon,
                     Version = "2.1",
                     ValidFrom = new DateTime(2023, 1, 1),
                     ValidUntil = null,
@@ -151,7 +150,7 @@ namespace AIRegulationInterpreter.Web.Controllers
                 {
                     Id = 2,
                     Title = "Pravilnik o tehni?kim merama zaštite",
-                    Type = "Pravilnik",
+                    Type = DocumentType.Pravilnik,
                     Version = "1.3",
                     ValidFrom = new DateTime(2023, 6, 1),
                     ValidUntil = null,
@@ -162,7 +161,7 @@ namespace AIRegulationInterpreter.Web.Controllers
                 {
                     Id = 3,
                     Title = "Zakon o ra?unovodstvu",
-                    Type = "Zakon",
+                    Type = DocumentType.Zakon,
                     Version = "3.0",
                     ValidFrom = new DateTime(2022, 1, 1),
                     ValidUntil = null,
@@ -173,7 +172,7 @@ namespace AIRegulationInterpreter.Web.Controllers
                 {
                     Id = 4,
                     Title = "Interna politika zaštite podataka",
-                    Type = "Interna Politika",
+                    Type = DocumentType.InternaPolitika,
                     Version = "1.0",
                     ValidFrom = new DateTime(2024, 1, 1),
                     ValidUntil = null,
@@ -184,7 +183,7 @@ namespace AIRegulationInterpreter.Web.Controllers
                 {
                     Id = 5,
                     Title = "Zakon o elektronskoj trgovini (zastario)",
-                    Type = "Zakon",
+                    Type = DocumentType.Zakon,
                     Version = "1.0",
                     ValidFrom = new DateTime(2015, 1, 1),
                     ValidUntil = new DateTime(2023, 12, 31),

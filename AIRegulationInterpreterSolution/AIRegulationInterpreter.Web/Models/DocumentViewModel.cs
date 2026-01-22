@@ -1,25 +1,27 @@
+using Common.Models.Constants;
+
 namespace AIRegulationInterpreter.Web.Models
 {
     public class DocumentViewModel
     {
         public int Id { get; set; }
         public string Title { get; set; } = string.Empty;
-        public string Type { get; set; } = string.Empty;
+        public DocumentType Type { get; set; }
         public string Version { get; set; } = string.Empty;
-        public DateTime ValidFrom { get; set; }
-        public DateTime? ValidUntil { get; set; }
         public bool IsActive { get; set; }
         public DateTime CreatedAt { get; set; }
+        
+        // From current version
+        public DateTime? ValidFrom { get; set; }
+        public DateTime? ValidUntil { get; set; }
     }
 
     public class DocumentDetailsViewModel
     {
         public int Id { get; set; }
         public string Title { get; set; } = string.Empty;
-        public string Type { get; set; } = string.Empty;
+        public DocumentType Type { get; set; }
         public string Version { get; set; } = string.Empty;
-        public DateTime ValidFrom { get; set; }
-        public DateTime? ValidUntil { get; set; }
         public bool IsActive { get; set; }
         public List<DocumentSectionViewModel> Sections { get; set; } = new List<DocumentSectionViewModel>();
         public List<DocumentVersionViewModel> Versions { get; set; } = new List<DocumentVersionViewModel>();
@@ -46,7 +48,7 @@ namespace AIRegulationInterpreter.Web.Models
     {
         public List<DocumentViewModel> Documents { get; set; } = new List<DocumentViewModel>();
         public string? SearchTerm { get; set; }
-        public string? FilterType { get; set; }
+        public DocumentType? FilterType { get; set; }
         public bool? FilterActive { get; set; }
     }
 }

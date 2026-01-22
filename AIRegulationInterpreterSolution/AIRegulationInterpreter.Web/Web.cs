@@ -1,18 +1,11 @@
-using System;
-using System.Collections.Generic;
 using System.Fabric;
-using System.IO;
-using System.Linq;
 using System.Net;
 using System.Security.Cryptography.X509Certificates;
-using System.Threading;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.ServiceFabric.Services.Communication.AspNetCore;
 using Microsoft.ServiceFabric.Services.Communication.Runtime;
 using Microsoft.ServiceFabric.Services.Runtime;
-using Microsoft.ServiceFabric.Data;
+using Common.Context;
+using Microsoft.EntityFrameworkCore;
 
 namespace AIRegulationInterpreter.Web
 {
@@ -41,25 +34,66 @@ namespace AIRegulationInterpreter.Web
                         var builder = WebApplication.CreateBuilder();
 
                         builder.Services.AddSingleton<StatelessServiceContext>(serviceContext);
+
+                        builder.Services.AddCors(options =>
+                        {
+                            options.AddDefaultPolicy(builder =>
+                            {
+                                builder.AllowAnyOrigin()
+                                       .AllowAnyMethod()
+                                       .AllowAnyHeader();
+                            });
+                        });
+
                         builder.WebHost
-                                    .UseKestrel(opt =>
-                                    {
-                                        int port = serviceContext.CodePackageActivationContext.GetEndpoint("ServiceEndpoint").Port;
-                                        opt.Listen(IPAddress.IPv6Any, port, listenOptions =>
-                                        {
-                                            listenOptions.UseHttps(GetCertificateFromStore());
-                                        });
-                                    })
-                                    .UseContentRoot(Directory.GetCurrentDirectory())
-                                    .UseServiceFabricIntegration(listener, ServiceFabricIntegrationOptions.None)
-                                    .UseUrls(url);
+                            .UseKestrel(opt =>
+                            {
+                                int port = serviceContext.CodePackageActivationContext.GetEndpoint("ServiceEndpoint").Port;
+                                opt.Listen(IPAddress.IPv6Any, port, listenOptions =>
+                                {
+                                    listenOptions.UseHttps(GetCertificateFromStore());
+                                });
+                            })
+                            .UseContentRoot(Directory.GetCurrentDirectory())
+                            .UseServiceFabricIntegration(listener, ServiceFabricIntegrationOptions.None)
+                            .UseUrls(url);
+
+                        builder.Services.AddDbContext<AIRegulationInterpreterContext>(options =>
+                            options.UseSqlServer(
+                                builder.Configuration.GetConnectionString("DefaultConnection"),
+                                sqlServerOptions => sqlServerOptions.EnableRetryOnFailure(
+                                    maxRetryCount: 5,
+                                    maxRetryDelay: TimeSpan.FromSeconds(30),
+                                    errorNumbersToAdd: null)));
+
                         builder.Services.AddControllersWithViews();
+                        
+                        // Swagger/OpenAPI Configuration
+                        builder.Services.AddEndpointsApiExplorer();
+                        builder.Services.AddSwaggerGen(options =>
+                        {
+                            options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
+                            {
+                                Title = "AI Regulation Interpreter API",
+                                Version = "v1",
+                                Description = "API for managing legal documents and regulations"
+                            });
+                        });
+
                         var app = builder.Build();
+                        
+                        // Enable Swagger UI
+                        app.UseSwagger();
+                        app.UseSwaggerUI(options =>
+                        {
+                            options.SwaggerEndpoint("/swagger/v1/swagger.json", "AI Regulation Interpreter API V1");
+                            options.RoutePrefix = "swagger"; // Access at https://localhost:8386/swagger
+                        });
+                        
                         if (!app.Environment.IsDevelopment())
                         {
-                        app.UseExceptionHandler("/Home/Error");
-                        // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                        app.UseHsts();
+                            app.UseExceptionHandler("/Home/Error");
+                            app.UseHsts();
                         }
                         app.UseHttpsRedirection();
                         app.UseStaticFiles();

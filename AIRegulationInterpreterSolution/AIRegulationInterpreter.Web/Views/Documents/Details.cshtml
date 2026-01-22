@@ -35,32 +35,6 @@
                     </span>
                 }
             </div>
-
-            <div class="card bg-light mb-4">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <small class="text-muted">Važe?i od:</small>
-                            <p class="mb-0"><strong>@Model.ValidFrom.ToString("dd.MM.yyyy")</strong></p>
-                        </div>
-                        <div class="col-md-6">
-                            <small class="text-muted">Važe?i do:</small>
-                            <p class="mb-0">
-                                <strong>
-                                    @if (Model.ValidUntil.HasValue)
-                                    {
-                                        @Model.ValidUntil.Value.ToString("dd.MM.yyyy")
-                                    }
-                                    else
-                                    {
-                                        <span class="text-success">Trenutno važe?i</span>
-                                    }
-                                </strong>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
 
         <!-- Document Structure -->
